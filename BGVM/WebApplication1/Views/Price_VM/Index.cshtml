@@ -1,0 +1,264 @@
+﻿@model IEnumerable<WebApplication1.Models.PRICE_VM>
+
+@{
+    ViewBag.Title = "Báo giá Cloud - Bảng giá";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style> 
+
+/* Create three columns of equal width */
+.columns {
+  float: left;
+  padding: 8px;
+}
+
+/* Style the list */
+.price {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  font-size: 20px;
+}
+
+/* Add shadows on hover */
+.price:hover {
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+/* Pricing header */
+.price .header {
+  background-color: #111;
+  color: white;
+  font-size: 25px;
+}
+
+/* List items */
+.price li {
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Grey list item */
+.price .grey {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+/* The "Sign Up" button */
+.button {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* Change the width of the three columns to 100%
+(to stack horizontally on small screens) */
+
+</style>
+
+<div class="container mt-5 p-0 bg-white p-4 rounded shadow">
+    <div class="d-flex justify-content-center">
+        <div class="columns">
+            <ul class="price">
+                <li class="header">BẢNG GIÁ</li>
+                <li>
+                    1 vCPU:
+                    <span class="badge badge-primary">
+                        @ViewBag.Cur_Price.CPU đ
+                    </span>
+                </li>
+                <li>
+                    1 GB RAM:
+                    <span class="badge badge-success">
+                        @ViewBag.Cur_Price.RAM đ
+                    </span>
+                </li>
+                <li>
+                    1 GB FAST Storage (combine SSD+SAS10K):
+                    <span class="badge badge-secondary">
+                        @ViewBag.Cur_Price.DISK_FAST đ
+                    </span>
+                </li>
+                <li>
+                    1 GB SLOW Storage (NL SAS 7k2):
+                    <span class="badge badge-info">
+                        @ViewBag.Cur_Price.DISK_SLOW đ
+                    </span>
+                </li>
+                <li class="grey">
+                    <button type="button" class="btn btn-info font-weight-bold px-5" data-toggle="modal" data-target="#exampleModal">Thay đổi</button>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mb-0 h1 font-italic p-2 text-light" style="background-color:rosybrown; margin-top:100px;">
+        @{
+            <span>LỊCH SỬ THAY ĐỔI BẢNG GIÁ</span>
+        }
+    </div>
+
+    <table class="table table-bordered bg-white" cellspacing="0">
+        <thead>
+            <tr class="table-pink text-table-index text-center">
+                <th class="">1 vCPU</th>
+                <th class="">
+                    1 GB RAM
+                </th>
+                <th class="">
+                    1 GB FAST Storage
+                </th>
+                <th class="">
+                    1 GB SLOW Storage
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.List_Price)
+            {
+                <tr class="text-table-index-body" @*data-toggle="modal"*@ data-href="@Url.Action("Detail","OS_VM", new {ID = item.ID})">
+
+                    <td class="p-2 h7">
+                        @item.CPU đ
+                    </td>
+                    <td class="p-2 h7">
+                        @item.RAM đ
+                    </td>
+                    <td class="p-2 h7">
+                        @item.DISK_SLOW đ
+                    </td>
+                    <td class="p-2 h7">
+                        @item.DISK_FAST đ
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+    <form method="post" name="Form">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Nhập hóa đơn</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <small class="form-text text-muted mb-1 text-left">
+                                1 vCPU (VNĐ):
+                            </small>
+                            <input name="CPUpri" id="Price1" value="@ViewBag.Cur_Price.CPU" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <small class="form-text text-muted mb-1 text-left">
+                                1 GB RAM (VNĐ):
+                            </small>
+                            <input name="RAMpri" id="Price2" value="@ViewBag.Cur_Price.RAM" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <small class="form-text text-muted mb-1 text-left">
+                                1 GB FAST Storage (combine SSD+SAS10K) (VNĐ):
+                            </small>
+                            <input name="Fastpri" id="Price3" value="@ViewBag.Cur_Price.DISK_FAST" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <small class="form-text text-muted mb-1 text-left">
+                                1 GB SLOW Storage (NL SAS 7k2) (VNĐ):
+                            </small>
+                            <input name="Slowpri" id="Price4" value="@ViewBag.Cur_Price.DISK_SLOW" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" name="submit" value="checkout" class="btn btn-primary font-weight-bold px-5">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  
+
+    // Hàm định dạng số thành chuỗi với dấu chấm ngăn cách hàng nghìn
+    function formatNumberWithCommas(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Hàm xóa các ký tự không phải số
+    function removeNonNumericCharacters(value) {
+        return value.replace(/[^\d]/g, "");
+    }
+
+    var priceInput1 = document.getElementById("Price1");
+    var priceInput2 = document.getElementById("Price2");
+    var priceInput3 = document.getElementById("Price3");
+    var priceInput4 = document.getElementById("Price4");
+
+    priceInput1.addEventListener("input", function () {
+        var inputValue = removeNonNumericCharacters(this.value);
+        var numericValue = parseFloat(inputValue);
+
+        if (!isNaN(numericValue)) {
+            var formattedValue = formatNumberWithCommas(numericValue);
+            this.value = formattedValue;
+        } else {
+            this.value = "";
+        }
+    });
+
+    priceInput2.addEventListener("input", function () {
+        var inputValue = removeNonNumericCharacters(this.value);
+        var numericValue = parseFloat(inputValue);
+
+        if (!isNaN(numericValue)) {
+            var formattedValue = formatNumberWithCommas(numericValue);
+            this.value = formattedValue;
+        } else {
+            this.value = "";
+        }
+    });
+
+    priceInput3.addEventListener("input", function () {
+        var inputValue = removeNonNumericCharacters(this.value);
+        var numericValue = parseFloat(inputValue);
+
+        if (!isNaN(numericValue)) {
+            var formattedValue = formatNumberWithCommas(numericValue);
+            this.value = formattedValue;
+        } else {
+            this.value = "";
+        }
+    });
+
+    priceInput4.addEventListener("input", function () {
+        var inputValue = removeNonNumericCharacters(this.value);
+        var numericValue = parseFloat(inputValue);
+
+        if (!isNaN(numericValue)) {
+            var formattedValue = formatNumberWithCommas(numericValue);
+            this.value = formattedValue;
+        } else {
+            this.value = "";
+        }
+    });
+</script>
+
+

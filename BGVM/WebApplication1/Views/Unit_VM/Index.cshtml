@@ -1,0 +1,370 @@
+﻿
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý thông tin hệ thống";
+    Layout = "~/Views/Shared/_Layout_VM.cshtml";
+}
+
+
+
+<div class="container mt-5 p-0 bg-white p-4 rounded shadow">
+    @using (Html.BeginForm("Index", "Unit_VM", FormMethod.Get))
+    {
+        <div class="form-row">
+            <div class="col-lg-1 col-2 mb-3 d-flex align-items-end justify-content-start">
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Lọc
+                    </button>
+                    <div class="dropdown-menu">
+                        @Html.ActionLink("Máy vật lý (PHY)", "Index", new { sortOrder = ViewBag.PHYSort, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Máy ảo (VM)", "Index", new { sortOrder = ViewBag.VMSort, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        <div class="dropdown-divider"></div>
+                        @Html.ActionLink("Còn hạn", "Index", new { sortOrder = ViewBag.CHSort, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Sắp hết hạn", "Index", new { sortOrder = ViewBag.SHHSort, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Hết hạn", "Index", new { sortOrder = ViewBag.HHSort, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })             
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 d-none d-lg-block mb-3">
+
+            </div>
+            <div class="col-2 mb-3 text-right">
+                @Html.TextBox("SearchDateStart", ViewBag.CurrentDateStart as string, new { @class = "form-control", @type = "date" })
+            </div>
+            <div class="col-2 mb-3 d-flex align-items-end justify-content-end">
+                @Html.TextBox("SearchDateEnd", ViewBag.CurrentDateEnd as string, new { @class = "form-control", @type = "date" })
+            </div>
+
+            <div class="col-lg-2 col-3 mb-3">
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            </div>
+            <div class="col-1 mb-3 d-flex align-items-end">
+                <button class="btn btn-success" type="submit">Tìm</button>
+            </div>
+            @*@Html.CheckBox("MTSCheck", new { @class = "form-check" })*@
+            <div class="pt-2">
+                <a class="btn-ex" href="@Url.Action("ExportToExcel", "RoomTicket", new { sortOrder = ViewBag.CurrentSort, searchString = ViewBag.CurrentFilter, SearchDateStart = ViewBag.CurrentDateStart, SearchDateEnd = ViewBag.SearchDateEnd })"><i class="fa-solid fa-file-export"></i> Excel</a>
+            </div>
+        </div>
+
+    }
+
+
+
+
+    <table class="table table-bordered bg-white" cellspacing="0">
+        <thead>
+            <tr class="table-pink text-table-index text-center">
+                <th class="text-light">Đơn vị</th>
+                <th class="text-light">Tên máy</th>
+                <th class="text-light">Loại</th>
+                <th class="text-light ">IP</th>
+                <th class="text-light">Crendential</th>
+                <th class="text-light">chủ sở hữu</th>
+                <th class="text-light ">Địa điểm</th>
+                <th class="text-light ">Trạng thái</th>
+                <th class="text-light "></th>
+            </tr>
+        </thead>
+        <tbody class="">
+            @{int x = 0; int y = 0;}
+            @foreach (var item in ViewBag.Data)
+            {
+                string formattedDateStart = item.START_DATE.ToString("dd/MM/yyyy");
+                string formattedDateEnd = item.END_DATE.ToString("dd/MM/yyyy");
+                if (item.ID_UNIT != x)
+                {
+                    <tr cellspacing="0" data-href="">
+                        <td rowspan="@item.COUNT" class="p-1 h7 text-center align-middle">
+                            @item.UNIT_NAME
+                        </td>
+                        <td class="p-1 h7">
+                            @item.VM_NAME
+                        </td>
+                        <td class="p-1 h7">
+                            @item.TYPE
+                        </td>
+                        <td class="p-1 h7">
+                            @{
+
+                                List<string> IP = new List<string>();
+                                foreach (var itemip in ViewBag.IP_VM)
+                                {
+                                    if (itemip.ID_VM == item.ID_VM)
+                                    {
+                                        IP.Add(itemip.IP_ADDRESS);
+                                    }
+                                }
+                                if (IP.Count() > 1)
+                                {
+                                    int more = IP.Count();
+                                    <div class="d-flex align-content-center justify-content-between ">
+                                        <span>@IP.FirstOrDefault() ...(@more)</span>
+                                        <div class="dropdown dropleft">
+                                            <a data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-list text-success text-decoration-none"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-1">
+                                                @{foreach (var itemips in IP)
+                                                    {
+                                                        <a class="dropdown-item copy h7" href="#">@itemips</a>
+                                                        <div class="dropdown-divider p-0 m-0"></div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <span>@IP.FirstOrDefault()</span>
+                                }
+
+                            }
+                        </td>
+                        <td class="p-1 h7 d-flex align-content-center justify-content-between border-0">
+                            **********
+                            <div class="dropdown dropleft">
+                                <a data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-eye text-info text-decoration-none mt-1"></i>
+                                </a>
+                                <div class="dropdown-menu p-1">
+                                    @{foreach (var itemCre in ViewBag.CRENDENTIAL_VM)
+                                        {
+                                            if (itemCre.ID_VM == item.ID_VM)
+                                            {
+                                                <a class="dropdown-item copy h7" href="#">@itemCre.CRENDENTIAL</a>
+                                                <div class="dropdown-divider  p-0 m-0"></div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-1 h7">
+                            @item.OWNER
+                        </td>
+                        <td class="p-1 h7">
+                            @item.LOCATION
+                        </td>
+                        <td class="py-1 px-0 h7 border-left-0 border-right-0 border-bottom-0 text-center">
+                            <div class="dropdown ">
+                                @{ if (item.ID_STATUS == 1)
+                                    {
+                                        <span class="badge badge-primary py-1 px-2 mr-3">
+                                            Còn hạn
+                                        </span>
+                                    }
+                                    if (item.ID_STATUS == 2)
+                                    {
+                                        <span class="badge badge-warning py-1 px-2">
+                                            Sắp hết hạn
+                                        </span>
+                                    }
+                                    if (item.ID_STATUS == 3)
+                                    {
+                                        <span class="badge badge-danger py-1 px-2 mr-3">
+                                            Hết hạn
+                                        </span>
+                                    }
+                                }
+                                <a class="ml-3" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-calendar-days text-info text-decoration-none mt-1"></i>
+                                </a>
+                                <div class="dropdown-menu p-1">
+                                    <a class="dropdown-item copy h7" href="#">Từ: @formattedDateStart</a>
+                                    <a class="dropdown-item copy h7" href="#">Đến: @formattedDateEnd</a>
+                                </div>
+                            </div>
+                        </td>
+                        @{ 
+                            string href = "#collapseExample" + item.ID_UNIT;
+                            string id = "collapseExample" + item.ID_UNIT;
+                        }
+                    <td rowspan="@item.COUNT" class="p-1 h7 text-center align-middle">
+                        <a class="text-decoration-none m-1" href="@Url.Action("Detail","Unit_VM", new {ID_UNIT = item.ID_UNIT})">
+                            <i class="fa-solid fa-circle-right text-primary"></i>
+                        </a>                        
+                        <a class="text-decoration-none m-1" href="" data-toggle="modal" data-target="@href">
+                            <i class="fa-solid fa-trash text-danger"></i>
+                        </a>
+                        <div class="modal fade" id="@id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Cảnh báo</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span>Bạn có thực sự muốn xóa đơn vị </span>
+                                        <span class="font-weight-bold">@item.UNIT_NAME</span>
+                                        <span> khỏi hệ thống.</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <a class="text-decoration-none m-1 btn btn-danger btn-delete" href="@Url.Action("Delete","Unit_VM", new {ID_UNIT = item.ID_UNIT})">
+                                            Xóa
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="" data-href="">
+                        <td class="p-1 h7">
+                            @item.VM_NAME
+                        </td>
+                        <td class="p-1 h7">
+                            @item.TYPE
+                        </td>
+                        <td class="p-1 h7">
+                            @{
+
+                                List<string> IP = new List<string>();
+                                foreach (var itemip in ViewBag.IP_VM)
+                                {
+                                    if (itemip.ID_VM == item.ID_VM)
+                                    {
+                                        IP.Add(itemip.IP_ADDRESS);
+                                    }
+                                }
+                                if (IP.Count() > 1)
+                                {
+                                    int more = IP.Count();
+                                    <div class="d-flex align-content-center justify-content-between ">
+                                        <span>@IP.FirstOrDefault() ...(@more)</span>
+                                        <div class="dropdown dropleft">
+                                            <a data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-list text-success text-decoration-none"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-1">
+                                                @{foreach (var itemips in IP)
+                                                    {
+                                                        <a class="dropdown-item copy h7" href="#">@itemips</a>
+                                                        <div class="dropdown-divider p-0 m-0"></div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <span>@IP.FirstOrDefault()</span>
+                                }
+
+                            }
+                        </td>
+                        <td class="p-1 h7 d-flex align-content-center justify-content-between border-left-0 border-right-0 border-bottom-0">
+                            **********
+                            <div class="dropdown dropleft">
+                                <a data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-eye text-info text-decoration-none"></i>
+                                </a>
+                                <div class="dropdown-menu p-1">
+                                    @{foreach (var itemCre in ViewBag.CRENDENTIAL_VM)
+                                        {
+                                            if (itemCre.ID_VM == item.ID_VM)
+                                            {
+                                                <a class="dropdown-item copy h7" href="#">@itemCre.CRENDENTIAL</a>
+                                                <div class="dropdown-divider p-0 m-0"></div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-1 h7">
+                            @item.OWNER
+                        </td>
+                        <td class="p-1 h7">
+                            @item.LOCATION
+                        </td>
+                        <td class="py-1 px-0 h7 border-left-0 border-right-0 border-bottom-0 text-center">
+                            <div class="dropdown ">
+                                @{ if (item.ID_STATUS == 1)
+                                    {
+                                        <span class="badge badge-primary py-1 px-2 mr-3">
+                                            Còn hạn
+                                        </span>
+                                    }
+                                    if (item.ID_STATUS == 2)
+                                    {
+                                        <span class="badge badge-warning py-1 px-2">
+                                            Sắp hết hạn
+                                        </span>
+                                    }
+                                    if (item.ID_STATUS == 3)
+                                    {
+                                        <span class="badge badge-danger py-1 px-2 mr-3">
+                                            Hết hạn
+                                        </span>
+                                    }
+                                }
+                                <a class="ml-3" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-calendar-days text-info text-decoration-none mt-1"></i>
+                                </a>
+                                <div class="dropdown-menu p-1">
+                                    <a class="dropdown-item copy h7" href="#">Từ: @formattedDateStart</a>
+                                    <a class="dropdown-item copy h7" href="#">Đến: @formattedDateEnd</a>
+                                </div>
+                            </div>
+                        </td>                       
+                    </tr>
+                }
+                x = item.ID_UNIT;
+                y++;
+                if (y == item.COUNT)
+                {
+                    <tr cellspacing="0" data-href="" style="background-color: #eaeaea; ">
+                        <td colspan="9" class="p-2 h7">
+                        </td>
+                    </tr>
+
+                    y = 0;
+                }
+            }
+        </tbody> 
+    </table>
+    <div class="text-center">
+        @Html.PagedListPager(ViewBag.Data as PagedList.IPagedList, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, SearchDateStart = ViewBag.CurrentDateStart, SearchDateEnd = ViewBag.SearchDateEnd }))
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@*<script>
+        $(document).ready(function () {
+            $(document.body).on("click", "tr[data-href]", function () {
+                window.location.href = this.dataset.href;
+            });
+        });
+    </script>*@
+
+<script>
+    const actionLinks = document.querySelectorAll('.copy');
+    actionLinks.forEach(function (actionLink, index) {
+        actionLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            const linkText = actionLink.textContent;
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = linkText;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextarea);
+        });
+    });
+</script>
+
+
+

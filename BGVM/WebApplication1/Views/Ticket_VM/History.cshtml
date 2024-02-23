@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "Báo giá Cloud - Báo cáo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<div class="container mt-5 p-0 bg-white p-4 rounded shadow mb-4 pb-5">
+    @using (Html.BeginForm())
+    {
+        <div class="text-center">
+            @Html.DropDownList("Year", new SelectList(ViewBag.Year), new { @class = "btn btn-secondary dropdown-toggle" })
+            <input type="submit" value="Chọn" class="btn btn-primary" />
+        </div>
+    }
+
+    <div class="text-center mt-5 mb-5 h1 font-italic p-2 text-light" style="background-color:rosybrown;">
+        @{
+            if (@ViewBag.yearTK == "Tổng")
+            {
+                <span>THỐNG KÊ SỐ TỔNG</span>
+            }
+            else
+            {
+                <span>THỐNG KÊ NĂM @ViewBag.yearTK</span>
+            }
+        }
+    </div>
+
+    <div class="mb-5 mt-4 text-center mx-5">
+        <div class="border mx-5">
+            <canvas id="myChart5" style="width:100%;"></canvas>
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col-6">
+            <canvas id="myChart1" style="width:100%;max-width:700px"></canvas>
+        </div>
+
+        <div class="col-6">
+            <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        var month =  @Html.Raw(Json.Encode(ViewBag.Month));
+
+        var countWin =  @Html.Raw(Json.Encode(ViewBag.countWin));
+        var countLin =  @Html.Raw(Json.Encode(ViewBag.countLin));
+        var countUni =  @Html.Raw(Json.Encode(ViewBag.countUni));
+        var countOth =  @Html.Raw(Json.Encode(ViewBag.countOth));
+        var Loc =  @Html.Raw(Json.Encode(ViewBag.Loc));
+
+        console.log(Loc);
+
+
+        var xValues1 = ["Windows","Linux", "Unix", "Khác"];
+        var yValues1 = [countWin, countLin, countUni, countOth];
+        var barColors1 = [
+            "#007BFF",
+            "#f7ab32",
+            "#FF0000",
+            "#b2d4da"
+        ];
+
+        var xValues2 = Object.keys(Loc);
+        var yValues2 = Object.values(Loc);
+        var barColors2 = [];
+
+        function randomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        for (var i = 0; i < xValues2.length; i++) {
+            barColors2.push(randomColor());
+        }
+
+        new Chart("myChart1", {
+            type: "pie",
+            data: {
+                labels: xValues1,
+                datasets: [{
+                    backgroundColor: barColors1,
+                    data: yValues1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Hệ điều hành"
+                },
+            }
+        });
+
+        new Chart("myChart2", {
+            type: "pie",
+            data: {
+                labels: xValues2,
+                datasets: [{
+                    backgroundColor: barColors2,
+                    data: yValues2
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Khu vực"
+                }
+            }
+        });
+
+        var ctx = document.getElementById("myChart5").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                datasets: [{
+                    label: 'Số phiếu tạo',
+                    backgroundColor: "#00FF7F",
+                    data: month,
+                }],
+            },
+            options: {
+                tooltips: {
+                    displayColors: true,
+                    callbacks: {
+                        mode: 'x',
+                    },
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: false,
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        type: 'linear',
+                    }]
+                },
+            }
+        });
+
+    </script>
+</div>
+

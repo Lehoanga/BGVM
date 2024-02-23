@@ -1,0 +1,674 @@
+﻿@{
+    ViewBag.Title = "Quản lý thông tin Server - Tạo phiếu";
+    Layout = "~/Views/Shared/_Layout_VM.cshtml";
+}
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script type="text/javascript">
+    
+    function GetDynamicTextbox(val3, val4, val5, val6, val7) {
+        if (val3 == null) {        
+            return '<div> <table class="table table-bordered text-center m-0"> <tbody> <tr> <td class="p-0 col-1"> <div class="m-0 mb-1"> <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text"> </i> </a> <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy"> <i style="font-size: 14px;" class="fa-solid fa-copy"></i> </a> <a onclick="RemoveTextBox(this)" class="ml-1 text-danger text-decoration-none" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-trash header-text"></i> </a> </div> </td> <td class="p-0 table-text col-3"> <div class="mt-1 table-content outNVM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outN" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outSL" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNT" id="0"></div> </td> </tr> <tr class="collapse show idIN " id="collapseExample"> <td colspan="4" class="p-1 border-0"> <div class="card card-body border-0 text-left pt-0 p checkbox-card"> <div class="form-row"> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Tên máy: </small> <input name="NameVM" onchange="getData()" id="0" type="text" class="form-control in_tm"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Loại máy: </small> <select name="TypeVM" id="0" class="form-control typeVM"> <option value="PHY">Máy vật lý</option> <option value="VM">Máy ảo</option> </select> </div> <div class="form-group passport-box col-4"> <small class="form-text text-muted mb-1"> Chủ sở hũu: </small> <input name="ownerVM" id="0" onchange="getData()" type="text" class="in_owner form-control"> </div> </div> <div class="form-row"> <div class="form-group passport-box col-4"> <small class="form-text text-muted mb-1"> Ngày bắt đầu: </small> <input name="startDate" id="0" onchange="getData()" type="date" class="in_start form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Ngày kết thúc: </small> <input name="endDate" id="0" onchange="getData()" type="date" class="in_end form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Địa điểm: </small> <input name="Location" id="0" onchange="getData()" type="text" class="in_loc form-control"> </div> </div> <div> <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </div> </td> <td colspan="1" class="p-1"> <div id="IP_add0" class="form-group mb-1 text-left IP_add"> <input name="IP_count" value="1" id="0" type="text" class="in_IP_count form-control form-control-sm d-none"><small class="form-text text-muted mb-1"> Địa chỉ IP: </small> <div> <div class="d-flex mb-1"> <input name="IP" id="0" type="text" class="in_IP form-control form-control-sm"> <a id="0" onclick="RemoveTextBoxIP(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleIP" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i> </a> </div> </div> </div> <div class="text-left"> <a id="0" onclick="AddTextBoxIP(this.id)" class="btn btn-primary p-1 btn-addIP" style="font-size: 4px;"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </td> <td colspan="1" class="p-1"> <div id="CREN0" class="form-group mb-1 text-left CREN"> <input name="LI_count" value="1" id="0" type="text" class="in_LI_count form-control form-control-sm d-none"> <small class="form-text text-muted mb-1"> Thông tin đăng nhập: </small> <div> <div class="d-flex mb-1"> <input name="CREN" id="0" type="text" class="in_CREN form-control form-control-sm"> <a id="0" onclick="RemoveTextBoxLI(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleLI" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i> </a> </div> </div> </div> <div class="text-left"> <a id="0" onclick="AddTextBoxLI(this.id)" class="btn btn-primary p-1 btn-addLI" style="font-size: 4px;"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </td> </tr> </tbody> </table> </div>'
+        }
+        return '<div> <table class="table table-bordered text-center m-0"> <tbody> <tr> <td class="p-0 col-1"> <div class="m-0 mb-1"> <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text"> </i> </a> <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy"> <i style="font-size: 14px;" class="fa-solid fa-copy"></i> </a> <a onclick="RemoveTextBox(this)" class="ml-1 text-danger text-decoration-none" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-trash header-text"></i> </a> </div> </td> <td class="p-0 table-text col-3"> <div class="mt-1 table-content outNVM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outN" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outSL" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNT" id="0"></div> </td> </tr> <tr> <td colspan="4" class="p-1 border-0"> <div class="collapse show idIN " id="collapseExample"> <div class="card card-body border-0 text-left pt-0 p checkbox-card"> <div class="form-row"> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Tên máy: </small> <input value="' + val3 + '" name="NameVM" onchange="getData()" id="0" type="text" class="form-control in_tm"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Loại máy: </small> <select name="TypeVM" id="0" class="form-control typeVM"> <option value="PHY">Máy vật lý</option> <option value="VM">Máy ảo</option> </select> </div> <div class="form-group passport-box col-4"> <small class="form-text text-muted mb-1"> Chủ sở hũu: </small> <input name="ownerVM" value="' + val4 + '" id="0" onchange="getData()" type="text" class="in_owner form-control"> </div> </div> <div class="form-row"> <div class="form-group passport-box col-4"> <small class="form-text text-muted mb-1"> Ngày bắt đầu: </small> <input name="startDate" value="' + val5 + '" id="0" onchange="getData()" type="date" class="in_start form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Ngày kết thúc: </small> <input name="endDate" value="' + val6 + '" id="0" onchange="getData()" type="date" class="in_end form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Địa điểm: </small> <input name="Location" value="' + val7 +'" id="0" onchange="getData()" type="text" class="in_loc form-control"> </div> </div> <div> <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </div> </div> </td> <td colspan="1" class="p-1"> <div id="IP_add0" class="form-group mb-1 text-left IP_add"><input name="IP_count" value="1" id="0" type="text" class="in_IP_count form-control form-control-sm d-none"> <small class="form-text text-muted mb-1"> Địa chỉ IP: </small> <div> <div class="d-flex mb-1"> <input name="IP" id="0" type="text" class="in_IP form-control form-control-sm"> <a id="0" onclick="RemoveTextBoxIP(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleIP" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i> </a> </div> </div> </div> <div class="text-left"> <a id="0" onclick="AddTextBoxIP(this.id)" class="btn btn-primary p-1 btn-addIP" style="font-size: 4px;"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </td> <td colspan="1" class="p-1"> <div id="CREN0" class="form-group mb-1 text-left CREN"> <input name="LI_count" value="1" id="0" type="text" class="in_LI_count form-control form-control-sm d-none"> <small class="form-text text-muted mb-1"> Thông tin đăng nhập: </small> <div> <div class="d-flex mb-1"> <input name="CREN" id="0" type="text" class="in_CREN form-control form-control-sm"> <a id="0" onclick="RemoveTextBoxLI(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleLI" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i> </a> </div> </div> </div> <div class="text-left"> <a id="0" onclick="AddTextBoxLI(this.id)" class="btn btn-primary p-1 btn-addLI" style="font-size: 4px;"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </td> </tr> </tbody> </table> </div>'
+    }
+
+    function GetDynamicTextboxIP() {
+        return '<div class="d-flex mb-1"> <input name="IP" id="0" type="text" class="in_IP form-control form-control-sm"> <a id="0" onclick="RemoveTextBoxIP(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleIP" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i> </a> </div>'
+    }
+
+    function GetDynamicTextboxLI() {
+        return ' <div class="d-flex mb-1"> <input name="CREN" id="0" type="text" class="in_CREN form-control form-control-sm"> <a id="0" onclick="RemoveTextBoxLI(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleLI" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i> </a> </div>'
+    }
+
+    function AddTextBox(val3, val4, val5, val6, val7) {
+        var div = document.createElement('DIV');
+        div.innerHTML = GetDynamicTextbox(val3, val4, val5, val6, val7);
+        document.getElementById("divCont").appendChild(div);
+
+        $('.idIN').each(function (i) {
+            var newID = $(this).attr('id') + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.hrefIN').each(function (i) {
+            var href = $(this).attr('href') + i;
+            $(this).attr('href', href);
+        });
+
+        $('.input_a').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_tm').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.typeVM').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_owner').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_start').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_end').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_loc').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.IP_add').each(function (i) {
+            var newID ='IP_add'+i;
+            $(this).attr('id', newID);
+        });
+
+        $('.CREN').each(function (i) {
+            var newID = 'CREN' + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.btn-addLI').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.btn-addIP').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });  
+
+        $('.outN').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outSL').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNM').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNT').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        getData()
+
+        pointIN();
+
+        getOS();
+
+    }
+
+
+    function AddTextBoxIP(id) {
+        var div = document.createElement('DIV');
+        div.innerHTML = GetDynamicTextboxIP();
+        document.getElementById("IP_add" + id).appendChild(div)        
+        CountIP(id);
+    }
+
+    function AddTextBoxLI(id) {
+        var div = document.createElement('DIV');
+        div.innerHTML = GetDynamicTextboxLI();
+        document.getElementById("CREN" + id).appendChild(div)
+        CountLI(id);
+    }
+
+    function CopyTextBox(a) {
+
+        const nodeList = document.querySelectorAll(".input_a");
+        const nodeLista = document.querySelectorAll(".in_tm");
+        const nodeListb = document.querySelectorAll(".in_owner");
+        const nodeListc = document.querySelectorAll(".in_start");
+        const nodeListd = document.querySelectorAll(".in_end");
+        const nodeListe = document.querySelectorAll(".in_loc");
+
+        for (let i = 0; i < nodeList.length; i++) {
+            if (nodeList[i].id == parseInt(a)) {
+                AddTextBox(nodeLista[a - 1].value, nodeListb[a - 1].value, nodeListc[a - 1].value, nodeListd[a - 1].value, nodeListe[a - 1].value);
+            };
+        }
+    }
+
+    function RemoveTextBoxIP(div) {   
+        var x = div.parentNode.parentNode.parentNode.id;
+        if (div && div.parentNode && div.parentNode.parentNode) {
+            div.parentNode.parentNode.removeChild(div.parentNode);
+        }   
+        SplitCountID_IP(x);
+    }  
+
+    function RemoveTextBoxLI(div) {     
+        var x = div.parentNode.parentNode.parentNode.id;
+        if (div && div.parentNode && div.parentNode.parentNode) {            
+            div.parentNode.parentNode.removeChild(div.parentNode);
+        }
+        SplitCountID_LI(x);
+    }
+
+    function RemoveTextBox(div) {
+        document.getElementById('divCont').removeChild(div.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);
+        $('.idIN').each(function (i) {
+            var newID = $(this).attr('id') + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.hrefIN').each(function (i) {
+            var href = $(this).attr('href') + i;
+            $(this).attr('href', href);
+        });
+
+        $('.input_a').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_tm').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.typeVM').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_owner').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_start').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_end').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_loc').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.IP_add').each(function (i) {
+            var newID = 'IP_add' + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.CREN').each(function (i) {
+            var newID = 'CREN' + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.btn-addLI').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.btn-addIP').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        }); 
+
+        $('.outN').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outSL').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNM').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNT').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+    }
+</script>
+
+
+
+
+<div class="container">
+    <div class="body-tick mx-md-5 mt-5 pb-5">
+        <div class="text-center h4 py-2 m-0 form-header">
+            TẠO PHIẾU
+        </div>
+        <div class="bg-white">
+            @if (@ViewBag.ErrorTicket != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.ErrorTicket
+                </div>
+            }
+            @if (@ViewBag.ErrorTicketSL != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.ErrorTicketSL
+                </div>
+            }
+
+            <form method="post" name="Form" onsubmit="return validate()">
+                <div id="divCont">
+                    <div>
+                        <table class="table table-bordered text-center m-0">
+                            <tbody>
+                                <tr class="d-none">
+                                    <td class="p-0 col-1">
+                                        <div class="m-0 mb-1">
+                                            <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text"></i>
+                                            </a>
+                                            <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy">
+                                                <i style="font-size: 14px;" class="fa-solid fa-copy"></i>
+                                            </a>
+                                            <a class="ml-1 text-decoration-none" style="font-size: 4px;">
+                                                <i style="font-size: 14px;" class="fa-solid fa-trash header-text text-light"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="p-1 border-0">
+                                        <div class="collapse show idIN " id="collapseExample">
+                                            <div class="card card-body border-0 text-left pt-0 p checkbox-card">
+                                                <div class="form-group mb-2  passport-box">
+                                                    <small class="form-text text-muted mb-1">
+                                                        Tên đơn vị:
+                                                    </small>
+                                                    <input name="Unit" id="0" type="text" class="form-control">
+                                                </div>
+                                                <div>
+                                                    <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        <i class="fa-solid fa-plus header-text"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                        <table class="table table-bordered text-center m-0">
+                            <tbody>
+                                <tr>
+                                    <td class="col-1">
+                                    </td>
+                                    <td class="p-0  table-text col-3">
+                                        Tên máy
+                                    </td>
+                                    <td class="p-0  table-text col-2">
+                                        Chủ sở hữu
+                                    </td>
+                                    <td class="p-0 table-text col-2">
+                                        Ngày bắt đầu
+                                    </td>
+                                    <td class="p-0 table-text col-2">
+                                        Ngày kết thúc
+                                    </td>
+                                    <td class="p-0 table-text col-2">
+                                        Địa điểm
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>                   
+
+
+
+                    @*<div>
+            <table class="table table-bordered text-center m-0">
+                <tbody>
+                    <tr>
+                        <td class="p-0 col-1">
+                            <div class="m-0 mb-1">
+                                <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text">
+                                        </i>
+                                </a>
+                                <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy">
+                                    <i style="font-size: 14px;" class="fa-solid fa-copy"></i>
+                                </a>
+                                <a onclick="RemoveTextBox(this)" class="ml-1 text-danger text-decoration-none" style="font-size: 4px; cursor: pointer;">
+                                    <i style="font-size: 14px;" class="fa-solid fa-trash header-text"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="p-0 table-text col-3">
+                            <div class="mt-1 table-content outNVM" id="0"></div>
+                        </td>
+                        <td class="p-0 table-text col-2">
+                            <div class="mt-1 table-content outN" id="0"></div>
+                        </td>
+                        <td class="p-0 table-text col-2">
+                            <div class="mt-1 table-content outSL" id="0"></div>
+                        </td>
+                        <td class="p-0 table-text col-2">
+                            <div class="mt-1 table-content outNM" id="0"></div>
+                        </td>
+                        <td class="p-0 table-text col-2">
+                            <div class="mt-1 table-content outNT" id="0"></div>
+                        </td>
+                    </tr>
+                    <tr class="collapse show idIN " id="collapseExample">
+                        <td colspan="4" class="p-1 border-0">
+
+                                <div class="card card-body border-0 text-left pt-0 p checkbox-card">
+                                    <div class="form-row">
+                                        <div class="form-group col-4">
+                                            <small class="form-text text-muted mb-1">
+                                                Tên máy:
+                                            </small>
+                                            <input name="NameVM" onchange="getData()" id="0" type="text" class="form-control in_tm">
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <small class="form-text text-muted mb-1">
+                                                Loại máy:
+                                            </small>
+                                            <select name="TypeVM" id="0" class="form-control typeVM">
+                                                <option value="PHY">Máy vật lý</option>
+                                                <option value="VM">Máy ảo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group passport-box col-4">
+                                            <small class="form-text text-muted mb-1">
+                                                Chủ sở hũu:
+                                            </small>
+                                            <input name="ownerVM" id="0" onchange="getData()" type="text" class="in_owner form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group passport-box col-4">
+                                            <small class="form-text text-muted mb-1">
+                                                Ngày bắt đầu:
+                                            </small>
+                                            <input name="startDate" id="0" onchange="getData()" type="date" class="in_start form-control">
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <small class="form-text text-muted mb-1">
+                                                Ngày kết thúc:
+                                            </small>
+                                            <input name="endDate" id="0" onchange="getData()" type="date" class="in_end form-control">
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <small class="form-text text-muted mb-1">
+                                                Địa điểm:
+                                            </small>
+                                            <input name="Location" id="0" onchange="getData()" type="text" class="in_loc form-control">
+                                        </div>
+                                    </div>
+
+                                    <div> <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            <i class="fa-solid fa-plus header-text"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                        </td>
+                        <td colspan="1" class="p-1">
+                            <div id="IP_add0" class="form-group mb-1 text-left IP_add">
+                                <input name="IP_count" value="1" id="0" type="text" class="in_IP_count form-control form-control-sm">
+                                <small class="form-text text-muted mb-1">
+                                    Địa chỉ IP:
+                                </small>
+                                <div>
+                                    <div class="d-flex mb-1">
+                                        <input name="IP" id="0" type="text" class="in_IP form-control form-control-sm">
+                                        <a id="0" onclick="RemoveTextBoxIP(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleIP" style="font-size: 4px; cursor: pointer;">
+                                            <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <a id="0" onclick="AddTextBoxIP(this.id)" class="btn btn-primary p-1 btn-addIP" style="font-size: 4px;">
+                                    <i class="fa-solid fa-plus header-text"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td colspan="1" class="p-1">
+                            <div id="CREN0" class="form-group mb-1 text-left CREN">
+                                <input name="LI_count" value="1" id="0" type="text" class="in_LI_count form-control form-control-sm">
+                                <small class="form-text text-muted mb-1">
+                                    Thông tin đăng nhập:
+                                </small>
+                                <div>
+                                    <div class="d-flex mb-1">
+                                        <input name="CREN" id="0" type="text" class="in_CREN form-control form-control-sm">
+                                        <a id="0" onclick="RemoveTextBoxLI(this)" class="ml-1 mt-2 text-danger text-decoration-none btn-deleLI" style="font-size: 4px; cursor: pointer;">
+                                            <i style="font-size: 14px;" class="fa-solid fa-xmark header-text"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <a id="0" onclick="AddTextBoxLI(this.id)" class="btn btn-primary p-1 btn-addLI" style="font-size: 4px;">
+                                    <i class="fa-solid fa-plus header-text"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>*@
+
+
+                </div>
+                <div class="text-left pb-3 pt-4">
+                    <button type="submit" class="btn btn-primary ml-5">Tạo Phiếu</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>   
+
+    function getData()
+    {
+        const nodeLista = document.querySelectorAll(".in_tm");        
+        const nodeListb = document.querySelectorAll(".in_owner");
+        const nodeListc = document.querySelectorAll(".in_start");
+        const nodeListd = document.querySelectorAll(".in_end");
+        const nodeListe = document.querySelectorAll(".in_loc");
+
+        const nodeListN = document.querySelectorAll(".outN");
+        const nodeListSL = document.querySelectorAll(".outSL");
+        const nodeListNM = document.querySelectorAll(".outNM");
+        const nodeListNT = document.querySelectorAll(".outNT");
+        const nodeListNVM = document.querySelectorAll(".outNVM");
+
+        for (let i = 0; i < nodeListb.length; i++) {      
+            nodeListN[i].innerHTML = nodeListb[i].value;
+            nodeListSL[i].innerHTML = nodeListc[i].value;
+            nodeListNM[i].innerHTML = nodeListd[i].value;
+            nodeListNT[i].innerHTML = nodeListe[i].value;           
+            nodeListNVM[i].innerHTML = nodeLista[i].value;
+            
+        }
+
+
+    }
+    pointIN();
+    function pointIN() {
+        //const nodeNGM = document.querySelectorAll(".in_ten_b");
+        //nodeNGM[nodeNGM.length - 1].focus();
+    }
+    getOS();
+
+    function getOS() {
+        @*var myData = @Html.Raw(Json.Encode(ViewBag.OS));
+
+            var selectElements = document.getElementsByClassName('os_in');
+
+            // Lặp qua từng select
+            for (var i = 0; i < selectElements.length; i++) {
+                var select = selectElements[i];
+                select.className = 'form-control os_ined';
+
+                // Lặp qua từng phần tử trong mảng myData
+                for (var j = 0; j < myData.length; j++) {
+                    var option = document.createElement('option');
+                    option.value = myData[j].ID;
+                    option.textContent = myData[j].NAME_OS;
+                    select.appendChild(option);
+                }
+            }*@
+    }
+
+    function CountIP(id) {        
+        var ipAdd1Div = document.getElementById("IP_add" + id);  
+        if (ipAdd1Div) {         
+            var inputElements = ipAdd1Div.querySelectorAll('input.in_IP');
+            var count = ipAdd1Div.querySelectorAll('.in_IP_count');
+            for (let i = 0; i < count.length; i++) {
+                count[i].value = inputElements.length;
+            }            
+        } 
+    }
+
+    function CountLI(id) {
+        var ipAdd1Div = document.getElementById("CREN" + id);
+        if (ipAdd1Div) {
+            var inputElements = ipAdd1Div.querySelectorAll('input.in_CREN');
+            var count = ipAdd1Div.querySelectorAll('.in_LI_count');
+            for (let i = 0; i < count.length; i++) {
+                count[i].value = inputElements.length;
+            }
+        }
+    }
+
+    function SplitCountID_IP(fullString) {
+        var number = fullString.match(/\d+/)[0];     
+        CountIP(number)
+    }
+
+    function SplitCountID_LI(fullString) {
+        var number = fullString.match(/\d+/)[0];
+        CountLI(number)
+    }       
+</script>
+
+<script type="text/javascript">
+    function validate() {
+        var a = document.forms["Form"]["Unit"].value;
+
+        if (CheckValiLeft() == false) {
+            alert("Điền đầy đủ thông tin");
+            return false;
+        }       
+
+        if (CheckValiRight() == false) {
+            alert("Điền đầy đủ thông tin");
+            return false;
+        }              
+        
+        if (a === "") {
+            alert("Điền đầy đủ thông tin");
+            return false;
+        }
+      
+        return true;
+    }
+
+    function CheckValiLeft() {
+        var b = document.forms["Form"]["NameVM"];
+        var c = document.forms["Form"]["ownerVM"];
+        var d = document.forms["Form"]["startDate"];
+        var e = document.forms["Form"]["endDate"];
+        var f = document.forms["Form"]["Location"];        
+
+        if (b) {
+            if (b.length) {
+                for (var i = 0; i < b.length; i++) {
+                    if (b[i].value == "" || c[i].value == "" || d[i].value == "" || e[i].value == "" || f[i].value == "") {
+                        return false;
+                    }
+
+                }
+            } else {
+                if (b.value == "" || c.value == "" || d.value == "" || e.value == "" || f.value == "") {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        
+
+        return true;
+    }
+
+    function CheckValiRight() {
+        var b = document.forms["Form"]["IP"];
+        var c = document.forms["Form"]["CREN"];
+
+        if (b) {
+            if (b.length) {
+                for (var i = 0; i < b.length; i++) {
+                    if (b[i].value == "") {
+                        return false;
+                    }
+
+                }
+            } else {
+                if (b.value == "") {
+                    return false;
+                }
+            }
+        }
+
+        if (c) {
+            if (c.length) {
+                for (var i = 0; i < c.length; i++) {
+                    if (c[i].value == "") {
+                        return false;
+                    }
+
+                }
+            } else {
+                if (c.value == "") {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+</script>

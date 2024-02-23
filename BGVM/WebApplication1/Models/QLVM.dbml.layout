@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.875, 9.625" name="QLVM">
+  <DataContextMoniker Name="/QLVMDataContext" />
+  <nestedChildShapes>
+    <classShape Id="49268172-ef33-42ac-bd96-a004038bca78" absoluteBounds="6.25, 1, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/QLVMDataContext/CONFIG_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ba967f0d-e3ad-4c75-8bdc-51fa585015fe" absoluteBounds="6.265, 1.46, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="302c01b6-d386-4659-9b66-7a393d2b30ba" absoluteBounds="3.5, 5.5, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/QLVMDataContext/OS_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8564474b-7444-40a3-b07c-05739050086e" absoluteBounds="3.515, 5.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2623061a-5702-41cf-ae17-34f02b5d75c6" absoluteBounds="0.75, 1.375, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/QLVMDataContext/PRICE_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a755aa37-489f-4b5c-9cf0-acb8974b7e46" absoluteBounds="0.765, 1.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="541c38a7-46c7-4607-86a4-8437f73d4219" absoluteBounds="3.5, 1, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/QLVMDataContext/TICKET_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1af9b2b5-3e5e-42ca-9899-e10ff916fbde" absoluteBounds="3.515, 1.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 5.78125); (6.28125 : 5.78125); (6.28125 : 3.5401025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/QLVMDataContext/OS_VM/OS_VM_CONFIG_VM" />
+      <nodes>
+        <classShapeMoniker Id="302c01b6-d386-4659-9b66-7a393d2b30ba" />
+        <classShapeMoniker Id="49268172-ef33-42ac-bd96-a004038bca78" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 2.17390055338542); (6.25 : 2.17390055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/QLVMDataContext/TICKET_VM/TICKET_VM_CONFIG_VM" />
+      <nodes>
+        <classShapeMoniker Id="541c38a7-46c7-4607-86a4-8437f73d4219" />
+        <classShapeMoniker Id="49268172-ef33-42ac-bd96-a004038bca78" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 2.26044840494792); (3.5 : 2.26044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QLVMDataContext/PRICE_VM/PRICE_VM_TICKET_VM" />
+      <nodes>
+        <classShapeMoniker Id="2623061a-5702-41cf-ae17-34f02b5d75c6" />
+        <classShapeMoniker Id="541c38a7-46c7-4607-86a4-8437f73d4219" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="dbc4f2e8-f6b7-48e9-b825-4e0e4f439aa4" absoluteBounds="6.375, 6.125, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/QLVMDataContext/UNIT_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cc570d8b-cdda-4f51-9b46-ea5b593b02c7" absoluteBounds="6.39, 6.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e62159fd-2e6d-4aba-984b-47d9fbed8070" absoluteBounds="9.125, 5.5, 2, 2.5401025390624996">
+      <DataClassMoniker Name="/QLVMDataContext/VM_STAT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a233514a-c8bc-491e-ae51-20ae19ce7cb0" absoluteBounds="9.14, 5.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f1e9e33b-9225-4e20-a954-f0e81c2e285a" absoluteBounds="6.375, 8.125, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/QLVMDataContext/STATUS_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7e6a64d8-a795-4283-9488-f49629201404" absoluteBounds="6.39, 8.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="00d4f2db-41fe-4f1e-89f1-540bfd3fd607" absoluteBounds="11.875, 7.125, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/QLVMDataContext/IP_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6795db39-6844-458e-939f-c52fadb58856" absoluteBounds="11.89, 7.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.375 : 6.72199625651042); (9.125 : 6.72199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/QLVMDataContext/UNIT_VM/UNIT_VM_VM_STAT" />
+      <nodes>
+        <classShapeMoniker Id="dbc4f2e8-f6b7-48e9-b825-4e0e4f439aa4" />
+        <classShapeMoniker Id="e62159fd-2e6d-4aba-984b-47d9fbed8070" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.375 : 8.72199625651042); (10.125 : 8.72199625651042); (10.125 : 8.0401025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/QLVMDataContext/STATUS_VM/STATUS_VM_VM_STAT" />
+      <nodes>
+        <classShapeMoniker Id="f1e9e33b-9225-4e20-a954-f0e81c2e285a" />
+        <classShapeMoniker Id="e62159fd-2e6d-4aba-984b-47d9fbed8070" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.125 : 7.58255126953125); (11.875 : 7.58255126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/QLVMDataContext/VM_STAT/VM_STAT_IP_VM" />
+      <nodes>
+        <classShapeMoniker Id="e62159fd-2e6d-4aba-984b-47d9fbed8070" />
+        <classShapeMoniker Id="00d4f2db-41fe-4f1e-89f1-540bfd3fd607" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="df225121-f491-440d-9e5f-4f2bd13663f3" absoluteBounds="12.625, 4.875, 2, 1.3862939453125">
+      <DataClassMoniker Name="/QLVMDataContext/CRENDENTIAL_VM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a40327d2-5e20-4ecd-aa9d-98c6a7fe3e9b" absoluteBounds="12.64, 5.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.125 : 5.88064697265625); (12.625 : 5.88064697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QLVMDataContext/VM_STAT/VM_STAT_CRENDENTIAL_VM" />
+      <nodes>
+        <classShapeMoniker Id="e62159fd-2e6d-4aba-984b-47d9fbed8070" />
+        <classShapeMoniker Id="df225121-f491-440d-9e5f-4f2bd13663f3" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

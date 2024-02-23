@@ -1,0 +1,85 @@
+﻿@model WebApplication1.Models.OS_VM
+
+@{
+    ViewBag.Title = "Báo giá Cloud - Chi tiết hệ điều hành";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="container">
+    <div class="body-tick mx-md-5 mt-5 pb-5">
+        <div class="text-center h4 py-2 m-0 form-header">
+            THÊM THẺ PHÒNG HỌP
+        </div>
+        <div class="bg-white">
+           
+
+            <form method="post" name="Form" onsubmit="return validate()">
+                <div id="divCont">
+                    <div class="collapse show idIN " id="collapseExample">
+                        <div class="card card-body border-0 text-left pt-0 p checkbox-card pt-3">           
+                            
+                            <div class="form-row form-group">
+                                <div class="col">
+                                    <small class="form-text text-muted mb-1">
+                                        Loại:
+                                    </small>
+                                    <select name="type_os_de" class="form-control">                                       
+                                        @{ foreach (var x in ViewBag.OS_list)
+                                            {
+                                                if (x == @ViewBag.OS.TYPE_OS)
+                                                {
+                                                    <option selected="selected">@x</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@x</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row form-group">
+                                <div class="col">
+                                    <small class="form-text text-muted mb-1">
+                                        Thông tin phòng:
+                                    </small>
+                                    <input name="inforRoomDE" type="text" class="form-control" value="@ViewBag.OS.NAME_OS">
+                                </div>
+                            </div>
+                            
+                            <div class="text-right">
+
+                                <button type="submit" name="submit" value="Edit" class="btn btn-primary font-weight-bold px-4 ml-2" disabled>Sửa</button>
+                                <button class="btn btn-danger font-weight-bold px-4 ml-2" disabled>Xóa</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function validate() {
+        var a = document.forms["Form"]["roomID"].value;
+        var b = document.forms["Form"]["inforRoom"].value;
+
+        if (a === "" || b === "") {
+            alert("Điền đầy đủ thông tin");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+

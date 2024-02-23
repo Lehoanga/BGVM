@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApplication1.Models.OS_VM>
+
+@{
+    ViewBag.Title = "Báo giá Cloud - Hệ điều hành";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 p-0 bg-white p-4 rounded shadow">
+    @using (Html.BeginForm("Index", "HomeQLMTS", FormMethod.Get))
+    {
+        <div class="form-row">
+            <div class="mb-3 d-flex align-items-end justify-content-start mr-3">
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Lọc
+                    </button>
+                    <div class="dropdown-menu">
+                        @Html.ActionLink("Window", "Index", new { sortOrder = ViewBag.WindowSortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Linux", "Index", new { sortOrder = ViewBag.LinuxSortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Unix", "Index", new { sortOrder = ViewBag.UNIXSortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Khác", "Index", new { sortOrder = ViewBag.OtherSortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                        <div class="dropdown-divider"></div>
+                        @Html.ActionLink("Tất cả", "Index", new { sortOrder = ViewBag.All, currentFilter = ViewBag.CurrentFilter }, new { @class = "dropdown-item" })
+                    </div>
+                </div>                
+            </div>
+            
+            <div class=" mb-3 d-flex align-items-end justify-content-end">
+                <a class="btn btn-primary" href="@Url.Action("Create", "OS_VM")">Thêm <i class="fa-solid fa-square-plus"></i></a>
+            </div>
+        </div>
+
+    }
+
+
+    <table class="table table-bordered bg-white" cellspacing="0">
+        <thead>
+            <tr class="table-pink text-table-index text-center">
+                <th class="d-none d-lg-table-cell">Mã hệ điều hành</th>
+                <th class="">
+                    Loại                   
+                </th>   
+                <th class="">
+                    Hệ điều hành
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="text-table-index-body" @*data-toggle="modal"*@ data-href="@Url.Action("Detail","OS_VM", new {ID = item.ID})">
+
+                    <td class="d-none d-lg-table-cell p-2 h7">
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td class="p-2 h7">
+                        @Html.DisplayFor(modelItem => item.TYPE_OS)
+                    </td>   
+                    <td class="p-2 h7">
+                        @Html.DisplayFor(modelItem => item.NAME_OS)
+                    </td>
+                </tr>
+               
+            }           
+        </tbody>
+    </table>
+    
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            window.location.href = this.dataset.href;
+        });
+    });
+</script>
+
+

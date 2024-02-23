@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<WebApplication1.Models.TICKET_VM>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Báo giá Cloud";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 p-0 bg-white p-4 rounded shadow">
+    @using (Html.BeginForm(FormMethod.Get))
+    {
+        <div class="form-row">
+            <div class="col-lg-1 col-2 mb-3 d-flex align-items-end justify-content-start">
+
+            </div>
+            <div class="col-2 d-none d-lg-block mb-3">
+
+            </div>
+            <div class="col-2 mb-3 text-right">
+                @Html.TextBox("SearchDateStart", ViewBag.CurrentDateStart as string, new { @class = "form-control", @type = "date" })
+            </div>
+            <div class="col-2 mb-3 d-flex align-items-end justify-content-end">
+                @Html.TextBox("SearchDateEnd", ViewBag.CurrentDateEnd as string, new { @class = "form-control", @type = "date" })
+            </div>
+
+            <div class="col-lg-2 col-3 mb-3">
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            </div>
+            <div class="col-1 mb-3 d-flex align-items-end">
+                <button class="btn btn-success" type="submit">Tìm</button>
+            </div>
+            @*@Html.CheckBox("MTSCheck", new { @class = "form-check" })*@
+            <div class="pt-2">
+                <a class="btn-ex" href="@Url.Action("ExportToExcel", "RoomTicket", new { sortOrder = ViewBag.CurrentSort, searchString = ViewBag.CurrentFilter, SearchDateStart = ViewBag.CurrentDateStart, SearchDateEnd = ViewBag.SearchDateEnd })"><i class="fa-solid fa-file-export"></i> Excel</a>
+            </div>
+        </div>
+
+    }
+
+
+
+
+    <table class="table table-bordered bg-white" cellspacing="0">
+        <thead>
+            <tr class="table-pink text-table-index text-center">
+                <th class="text-light">Số Ticket</th>
+                <th class="text-light">chủ sở hữu</th>
+                <th class="text-light ">Thời gian bắt đầu</th>
+                <th class="text-light">Thời gian kết thúc</th>
+                <th class="text-light">Địa điểm</th>
+                <th class="text-light ">Tổng tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                string formattedDateStart = item.STARTDATE.Value.ToString("dd/MM/yyyy");
+                string formattedDateEnd = item.ENDDATE.Value.ToString("dd/MM/yyyy");
+                <tr class="text-table-index-body" cellspacing="0" data-href="@Url.Action("Detail","Ticket_VM", new {id = item.ID})">
+                    <td class="p-2 h7">
+                        @Html.DisplayFor(modelItem => item.TICKETBA)
+                    </td>
+                    <td class="p-2 h7">
+                        @Html.DisplayFor(modelItem => item.OWNER)
+                    </td>
+                    <td class="p-2 h7">
+                        @formattedDateStart
+                    </td>
+                    <td class="p-2 h7">
+                        @formattedDateEnd
+                    </td>
+                    <td class="p-2 h7">
+                        @Html.DisplayFor(modelItem => item.LOCATION)
+                    </td>
+                    <td class="p-2 h7">
+                        @Html.DisplayFor(modelItem => item.TOTAL_PRICE) đ
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, SearchDateStart = ViewBag.CurrentDateStart, SearchDateEnd = ViewBag.SearchDateEnd }))
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            window.location.href = this.dataset.href;
+        });
+    });
+</script>

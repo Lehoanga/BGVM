@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLVM" Class="QLVMDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-MC3O297;Initial Catalog=QLVM;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLVMConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CONFIG_VM" Member="CONFIG_VMs">
+    <Type Name="CONFIG_VM">
+      <Column Name="ID_CONFIG" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_TICKET" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VM_ID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CPU" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RAM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_OS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DISK_SLOW" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DISK_FAST" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PRICE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="OS_VM_CONFIG_VM" Member="OS_VM" ThisKey="ID_OS" OtherKey="ID" Type="OS_VM" IsForeignKey="true" />
+      <Association Name="TICKET_VM_CONFIG_VM" Member="TICKET_VM" ThisKey="ID_TICKET" OtherKey="ID" Type="TICKET_VM" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OS_VM" Member="OS_VMs">
+    <Type Name="OS_VM">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TYPE_OS" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NAME_OS" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="OS_VM_CONFIG_VM" Member="CONFIG_VMs" ThisKey="ID" OtherKey="ID_OS" Type="CONFIG_VM" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PRICE_VM" Member="PRICE_VMs">
+    <Type Name="PRICE_VM">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CPU" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RAM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DISK_SLOW" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DISK_FAST" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PRICE_VM_TICKET_VM" Member="TICKET_VMs" ThisKey="ID" OtherKey="ID_PRICE" Type="TICKET_VM" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TICKET_VM" Member="TICKET_VMs">
+    <Type Name="TICKET_VM">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="STARTDATE" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ENDDATE" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="OWNER" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TICKETBA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LOCATION" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ID_PRICE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTAL_PRICE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="TICKET_VM_CONFIG_VM" Member="CONFIG_VMs" ThisKey="ID" OtherKey="ID_TICKET" Type="CONFIG_VM" />
+      <Association Name="PRICE_VM_TICKET_VM" Member="PRICE_VM" ThisKey="ID_PRICE" OtherKey="ID" Type="PRICE_VM" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UNIT_VM" Member="UNIT_VMs">
+    <Type Name="UNIT_VM">
+      <Column Name="ID_UNIT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UNIT_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="UNIT_VM_VM_STAT" Member="VM_STATs" ThisKey="ID_UNIT" OtherKey="ID_UNIT" Type="VM_STAT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VM_STATS" Member="VM_STATs">
+    <Type Name="VM_STAT">
+      <Column Name="ID_VM" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_UNIT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VM_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TYPE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OWNER" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LOCATION" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="START_DATE" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="END_DATE" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="VM_STAT_IP_VM" Member="IP_VMs" ThisKey="ID_VM" OtherKey="ID_VM" Type="IP_VM" />
+      <Association Name="VM_STAT_CRENDENTIAL_VM" Member="CRENDENTIAL_VMs" ThisKey="ID_VM" OtherKey="ID_VM" Type="CRENDENTIAL_VM" />
+      <Association Name="UNIT_VM_VM_STAT" Member="UNIT_VM" ThisKey="ID_UNIT" OtherKey="ID_UNIT" Type="UNIT_VM" IsForeignKey="true" />
+      <Association Name="STATUS_VM_VM_STAT" Member="STATUS_VM" ThisKey="ID_STATUS" OtherKey="ID_STATUS" Type="STATUS_VM" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.STATUS_VM" Member="STATUS_VMs">
+    <Type Name="STATUS_VM">
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="STATUS" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="STATUS_VM_VM_STAT" Member="VM_STATs" ThisKey="ID_STATUS" OtherKey="ID_STATUS" Type="VM_STAT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IP_VM" Member="IP_VMs">
+    <Type Name="IP_VM">
+      <Column Name="ID_IP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_VM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_ADDRESS" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="VM_STAT_IP_VM" Member="VM_STAT" ThisKey="ID_VM" OtherKey="ID_VM" Type="VM_STAT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CRENDENTIAL_VM" Member="CRENDENTIAL_VMs">
+    <Type Name="CRENDENTIAL_VM">
+      <Column Name="ID_CREN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_VM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CRENDENTIAL" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="VM_STAT_CRENDENTIAL_VM" Member="VM_STAT" ThisKey="ID_VM" OtherKey="ID_VM" Type="VM_STAT" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

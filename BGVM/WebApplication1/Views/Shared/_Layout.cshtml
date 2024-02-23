@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Assets/css/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="~/Assets/css/style.css">
+    <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md  header">
+        <a class="navbar-brand" href="@Url.Action("Index", "TrangChu")">
+            <div class="h5 text-white m-0 py-1">
+                <i class="fa-solid fa-house-user"></i>
+            </div>
+        </a>
+        <span class="text-light">|</span>
+        <a class="navbar-brand" href="@Url.Action("Index", "Ticket_VM")">
+            <div class="h5 text-white m-0 py-1 mr-lg-5 ml-3">BÁO GIÁ CLOUD</div>
+        </a>
+        <button class="navbar-toggler btn-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ml-xl-5">
+                <li class="nav-item active">
+                    <a href="@Url.Action("Create", "Ticket_VM")" class="btn btn-header mx-1 d-flex align-items-center">
+                        <i class="fa-solid fa-square-plus mr-2"></i>
+                        <div class="">Tạo Phiếu</div>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="@Url.Action("Index", "Price_VM")" class="btn btn-header mx-1 d-flex align-items-center">
+                        <i class="fa-solid fa-table-list mr-2"></i>
+                        <div class="">Bảng giá</div>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="@Url.Action("Index", "OS_VM")" class="btn btn-header mx-1 d-flex align-items-center">
+                        <i class="fa-solid fa-house-laptop mr-2"></i>
+                        <div class="">Hệ điều hành</div>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="@Url.Action("History", "Ticket_VM")" class="btn btn-header mx-1 d-flex align-items-center">
+                        <i class="fa-solid fa-chart-pie mr-2"></i>
+                        <div class="">Báo cáo</div>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="@Url.Action("Index", "Unit_VM")" class="btn btn-header mx-1 d-flex align-items-center">
+                        <i class="fa-solid fa-server mr-2"></i>
+                        <div class="">Quản lý thông tin Server</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+    </nav>
+
+    @RenderBody()
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="~/Assets/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/css/main.js"></script>
+</body>
+</html>

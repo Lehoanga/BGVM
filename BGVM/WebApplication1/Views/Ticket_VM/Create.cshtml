@@ -1,0 +1,546 @@
+﻿@model WebApplication1.Models.TICKET_VM
+
+@using System.Linq;
+@{
+    ViewBag.Title = "Báo giá Cloud - Tạo phiếu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script type="text/javascript">
+
+    function GetDynamicTextbox(val3, val4, val5, val6) {
+        if (val3 == null) {
+            return '<div> <table class="table table-bordered text-center m-0"> <tbody> <tr> <td class="p-0 col-1"> <div class="m-0 mb-1"> <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text"> </i> </a> <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy"> <i style="font-size: 14px;" class="fa-solid fa-copy"></i> </a> <a onclick="RemoveTextBox(this)" class="ml-1 text-danger text-decoration-none" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-trash header-text"></i> </a> </div> </td> <td class="p-0 table-text col-3"> <div class="mt-1 table-content outNVM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outN" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outSL" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNT" id="0"></div> </td> </tr> <tr> <td colspan="6" class="p-1 border-0"> <div class="collapse show idIN " id="collapseExample"> <div class="card card-body border-0 text-left pt-0 p checkbox-card"> <div class="form-row"> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Tên máy ảo: </small> <input name="VM-ID" onchange="getData()" id="0" type="text" class="form-control in_ber_b"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Số vCPU: </small> <input name="CPU" onchange="getData()" type="number" id="0" class="form-control in_ten_b"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Số GB RAM: </small> <input name="RAM" id="0" onchange="getData()" type="number" class="in_soluong_b form-control"> </div> </div> <div class="form-row"> <div class="form-group passport-box col-4"> <small class="form-text text-muted mb-1"> Số GB FAST Storage: </small> <input name="FAST" id="0" onchange="getData()" type="number" class="in_ngm_b form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Số GB SLOW Storage: </small> <input name="SLOW" id="0" onchange="getData()" type="number" class="in_ngt_b form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Hệ điều hành: </small> <select name="OS" id="0" class="form-control os_in"> </select> </div> </div> <div> <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </div> </div> </td> </tr> </tbody> </table> </div>'
+        }
+        return '<div> <table class="table table-bordered text-center m-0"> <tbody> <tr> <td class="p-0 col-1"> <div class="m-0 mb-1"> <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text"> </i> </a> <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy"> <i style="font-size: 14px;" class="fa-solid fa-copy"></i> </a> <a onclick="RemoveTextBox(this)" class="ml-1 text-danger text-decoration-none" style="font-size: 4px; cursor: pointer;"> <i style="font-size: 14px;" class="fa-solid fa-trash header-text"></i> </a> </div> </td> <td class="p-0 table-text col-3"> <div class="mt-1 table-content outNVM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outN" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outSL" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNM" id="0"></div> </td> <td class="p-0 table-text col-2"> <div class="mt-1 table-content outNT" id="0"></div> </td> </tr> <tr> <td colspan="6" class="p-1 border-0"> <div class="collapse show idIN " id="collapseExample"> <div class="card card-body border-0 text-left pt-0 p checkbox-card"> <div class="form-row"> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Tên máy ảo: </small> <input name="VM-ID" onchange="getData()" id="0" type="text" class="form-control in_ber_b"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Số vCPU: </small> <input name="CPU" value="' + val3 + '" onchange="getData()" type="number" id="0" class="form-control in_ten_b"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Số GB RAM: </small> <input name="RAM" value="'+ val4 +'" id="0" onchange="getData()" type="number" class="in_soluong_b form-control"> </div> </div> <div class="form-row"> <div class="form-group passport-box col-4"> <small class="form-text text-muted mb-1"> Số GB FAST Storage: </small> <input name="FAST" value="' + val5 + '" id="0" onchange="getData()" type="number" class="in_ngm_b form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Số GB SLOW Storage: </small> <input name="SLOW" value="' + val6 + '" id="0" onchange="getData()" type="number" class="in_ngt_b form-control"> </div> <div class="form-group col-4"> <small class="form-text text-muted mb-1"> Hệ điều hành: </small> <select name="OS" id="0" class="form-control os_in"> </select> </div> </div> <div> <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <i class="fa-solid fa-plus header-text"></i> </a> </div> </div> </div> </td> </tr> </tbody> </table> </div>'
+    }
+
+    function AddTextBox(val3, val4, val5, val6) {
+        var div = document.createElement('DIV');
+        div.innerHTML = GetDynamicTextbox(val3, val4, val5, val6);
+        document.getElementById("divCont").appendChild(div);
+
+        $('.idIN').each(function (i) {
+            var newID = $(this).attr('id') + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.hrefIN').each(function (i) {
+            var href = $(this).attr('href') + i;
+            $(this).attr('href', href);
+        });
+
+        $('.input_a').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_name_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ten_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ber_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_soluong_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.os_in').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ngm_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ngt_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outN').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outSL').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNM').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNT').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_mpm_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        getData()
+
+        pointIN();
+
+        getOS();
+
+    }
+
+    function CopyTextBox(a) {
+
+        const nodeList = document.querySelectorAll(".input_a");
+        const nodeListd = document.querySelectorAll(".in_ten_b");
+        const nodeListe = document.querySelectorAll(".in_soluong_b");
+        const nodeListf = document.querySelectorAll(".in_ngm_b");
+        const nodeListg = document.querySelectorAll(".in_ngt_b");
+        for (let i = 0; i < nodeList.length; i++) {
+            if (nodeList[i].id == parseInt(a)) {  
+                console.log(nodeListd[a].value);
+                AddTextBox(nodeListd[a].value, nodeListe[a].value, nodeListf[a].value, nodeListg[a].value);
+            };
+        }
+    }
+
+
+    function RemoveTextBox(div) {
+        document.getElementById('divCont').removeChild(div.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);
+        $('.idIN').each(function (i) {
+            var newID = $(this).attr('id') + i;
+            $(this).attr('id', newID);
+        });
+
+        $('.hrefIN').each(function (i) {
+            var href = $(this).attr('href') + i;
+            $(this).attr('href', href);
+        });
+
+        $('.input_a').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_name_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ten_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ber_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_soluong_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.os_in').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ngm_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_ngt_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outN').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outSL').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNM').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.outNT').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+
+        $('.in_mpm_b').each(function (i) {
+            var newID = i;
+            $(this).attr('id', newID);
+        });
+    }
+</script>
+
+
+
+
+<div class="container">
+    <div class="body-tick mx-md-5 mt-5 pb-5">
+        <div class="text-center h4 py-2 m-0 form-header">
+            TẠO PHIẾU
+        </div>
+        <div class="bg-white">
+            @if (@ViewBag.ErrorTicket != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.ErrorTicket
+                </div>
+            }
+            @if (@ViewBag.ErrorTicketSL != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.ErrorTicketSL
+                </div>
+            }
+
+            <form method="post" name="Form" onsubmit="return validate()">
+                <div id="divCont">
+                    <div>
+                        <table class="table table-bordered text-center m-0">
+                            <tbody>
+                                <tr class="d-none">
+                                    <td class="p-0 col-1">
+                                        <div class="m-0 mb-1">
+                                            <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text"></i>
+                                            </a>
+                                            <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy">
+                                                <i style="font-size: 14px;" class="fa-solid fa-copy"></i>
+                                            </a>
+                                            <a class="ml-1 text-decoration-none" style="font-size: 4px;">
+                                                <i style="font-size: 14px;" class="fa-solid fa-trash header-text text-light"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="p-0  table-text">
+                                        <div class="mt-1 table-content outN" id="0"></div>
+                                    </td>
+                                    <td class="p-0 table-text">
+                                        <div class="mt-1 table-content outSL" id="0"></div>
+                                    </td>
+                                    <td class="p-0 table-text">
+                                        <div class="mt-1 table-content outNM" id="0"></div>
+                                    </td>
+                                    <td class="p-0 table-text">
+                                        <div class="mt-1 table-content outNT" id="0"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="p-1 border-0">
+                                        <div class="collapse show idIN " id="collapseExample">
+                                            <div class="card card-body border-0 text-left pt-0 p checkbox-card">
+                                                <div class="form-group mb-2  passport-box">
+                                                    <small class="form-text text-muted mb-1">
+                                                        Số ticket:
+                                                    </small>
+                                                    <input name="ticket" id="0" type="text" class="form-control in_mpm_b">
+                                                </div>                                                
+                                                <div class="form-group">
+                                                    <small class="form-text text-muted mb-1">
+                                                        Tên người sở hữu:
+                                                    </small>
+                                                    <input name="owner_VM" type="text" onchange="getData()" id="0" class="form-control in_ten_b">
+                                                </div>
+                                                <div class="form-group">
+                                                    <small class="form-text text-muted mb-1">
+                                                        Vị trí:
+                                                    </small>
+                                                    <input name="loaction_VM" id="0" onchange="getData()" type="text" class="in_soluong_b form-control">
+                                                </div>
+                                                <div class="form-group passport-box">
+                                                    <small class="form-text text-muted mb-1">
+                                                        Ngày bắt đầu:
+                                                    </small>
+                                                    <input name="startDate" id="0" onchange="getData()" type="date" class="in_ngm_b form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <small class="form-text text-muted mb-1">
+                                                        Ngày kết thúc:
+                                                    </small>
+                                                    <input name="endDate" id="0" onchange="getData()" type="date" class="in_ngt_b form-control">
+                                                </div>
+                                                <div>
+                                                    <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        <i class="fa-solid fa-plus header-text"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                        <table class="table table-bordered text-center m-0">
+                            <tbody>
+                                <tr>
+                                    <td class="col-1">
+                                    </td>
+                                    <td class="p-0  table-text col-3">
+                                        Tên
+                                    </td>
+                                    <td class="p-0  table-text col-2">
+                                        vCPU
+                                    </td>
+                                    <td class="p-0 table-text col-2">
+                                        RAM
+                                    </td>
+                                    <td class="p-0 table-text col-2">
+                                        FAST Storage
+                                    </td>
+                                    <td class="p-0 table-text col-2">
+                                        SLOW Storage
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+                    @*<div>
+                            <table class="table table-bordered text-center m-0">
+                                <tbody>
+                                    <tr>
+                                        <td class="p-0 col-1">
+                                            <div class="m-0 mb-1">
+                                                <a class="hrefIN mr-1 text-decoration-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                    <i style="font-size: 14px;" class="fa-solid fa-bookmark header-text">
+                                                        </i>
+                                                </a>
+                                                <a class="input_a text-info text-decoration-none" style="font-size: 6px; cursor: pointer;" id="0" onclick="CopyTextBox(id)" value="copy">
+                                                    <i style="font-size: 14px;" class="fa-solid fa-copy"></i>
+                                                </a>
+                                                <a onclick="RemoveTextBox(this)" class="ml-1 text-danger text-decoration-none" style="font-size: 4px; cursor: pointer;">
+                                                    <i style="font-size: 14px;" class="fa-solid fa-trash header-text"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="p-0 table-text col-3">
+                                            <div class="mt-1 table-content outNVM" id="0"></div>
+                                        </td>
+                                        <td class="p-0 table-text col-2">
+                                            <div class="mt-1 table-content outN" id="0"></div>
+                                        </td>
+                                        <td class="p-0 table-text col-2">
+                                            <div class="mt-1 table-content outSL" id="0"></div>
+                                        </td>
+                                        <td class="p-0 table-text col-2">
+                                            <div class="mt-1 table-content outNM" id="0"></div>
+                                        </td>
+                                        <td class="p-0 table-text col-2">
+                                            <div class="mt-1 table-content outNT" id="0"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="p-1 border-0">
+                                            <div class="collapse show idIN " id="collapseExample">
+                                                <div class="card card-body border-0 text-left pt-0 p checkbox-card">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-4">
+                                                            <small class="form-text text-muted mb-1">
+                                                                Tên máy ảo:
+                                                            </small>
+                                                            <input name="VM-ID" onchange="getData()" id="0" type="text" class="form-control in_ber_b">
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <small class="form-text text-muted mb-1">
+                                                                Số vCPU:
+                                                            </small>
+                                                            <input name="CPU" onchange="getData()" type="number" id="0" class="form-control in_ten_b">
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <small class="form-text text-muted mb-1">
+                                                                Số GB RAM:
+                                                            </small>
+                                                            <input name="RAM" id="0" onchange="getData()" type="number" class="in_soluong_b form-control">
+                                                        </div>                                                        
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-group passport-box col-4">
+                                                            <small class="form-text text-muted mb-1">
+                                                                Số GB FAST Storage:
+                                                            </small>
+                                                            <input name="FAST" id="0" onchange="getData()" type="number" class="in_ngm_b form-control">
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <small class="form-text text-muted mb-1">
+                                                                Số GB SLOW Storage:
+                                                            </small>
+                                                            <input name="SLOW" id="0" onchange="getData()" type="number" class="in_ngt_b form-control">
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <small class="form-text text-muted mb-1">
+                                                                Hệ điều hành:
+                                                            </small>
+                                                            <select name="OS" id="0" class="form-control os_in">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div> <a onclick="AddTextBox()" class="btn btn-primary p-2 btn-add" style="font-size: 4px;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                            <i class="fa-solid fa-plus header-text"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>*@
+
+
+                </div>
+                <div class="text-left pb-3 pt-4">
+                    <button type="submit" class="btn btn-primary ml-5">Tạo Phiếu</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+
+
+    function getData()
+    {
+        const nodeList = document.querySelectorAll(".input_a");
+        const nodeListd = document.querySelectorAll(".in_ten_b");
+        const nodeListe = document.querySelectorAll(".in_soluong_b");
+        const nodeListf = document.querySelectorAll(".in_ngm_b");
+        const nodeListg = document.querySelectorAll(".in_ngt_b");
+        const nodeListh = document.querySelectorAll(".in_ber_b");
+
+        const nodeListN = document.querySelectorAll(".outN");
+        const nodeListSL = document.querySelectorAll(".outSL");
+        const nodeListNM = document.querySelectorAll(".outNM");
+        const nodeListNT = document.querySelectorAll(".outNT");
+        const nodeListNVM = document.querySelectorAll(".outNVM");
+
+        for (let i = 0; i < nodeList.length; i++) {
+            nodeListd[i].value = nodeListd[i].value.replace(',','');
+
+            nodeListN[i].innerHTML = nodeListd[i].value;
+            nodeListSL[i].innerHTML = nodeListe[i].value;
+            nodeListNM[i].innerHTML = nodeListf[i].value;
+            nodeListNT[i].innerHTML = nodeListg[i].value;
+            if (nodeListh[i])
+            {
+                nodeListNVM[i].innerHTML = nodeListh[i].value;
+            }
+        }
+
+
+    }
+    pointIN();
+    function pointIN() {
+        const nodeNGM = document.querySelectorAll(".in_ten_b");
+        nodeNGM[nodeNGM.length - 1].focus();
+    }
+    getOS();
+
+    function getOS() {
+        var myData = @Html.Raw(Json.Encode(ViewBag.OS));
+
+            var selectElements = document.getElementsByClassName('os_in');
+
+            // Lặp qua từng select
+            for (var i = 0; i < selectElements.length; i++) {
+                var select = selectElements[i];
+                select.className = 'form-control os_ined';
+
+                // Lặp qua từng phần tử trong mảng myData
+                for (var j = 0; j < myData.length; j++) {
+                    var option = document.createElement('option');
+                    option.value = myData[j].ID;
+                    option.textContent = myData[j].NAME_OS;
+                    select.appendChild(option);
+                }
+            }
+    }
+
+</script>
+
+<script type="text/javascript">
+    function validate() {
+        var a = document.forms["Form"]["ticket"].value;
+        var b = document.forms["Form"]["owner_VM"].value;
+        var c = document.forms["Form"]["loaction_VM"].value;
+        var d = document.forms["Form"]["startDate"].value;
+        var e = document.forms["Form"]["endDate"].value;
+
+        if (CheckValiLeft() == false) {
+            alert("Điền đầy đủ thông tin");
+            return false;
+        }      
+
+        if (a === "" || b == "" || c == "" || d == "" || e == "") {
+            alert("Điền đầy đủ thông tin");
+            return false;
+        }
+        return true;
+    }
+
+    function CheckValiLeft() {
+        var b = document.forms["Form"]["VM-ID"];
+        var c = document.forms["Form"]["CPU"];
+        var d = document.forms["Form"]["RAM"];
+        var e = document.forms["Form"]["FAST"];
+        var f = document.forms["Form"]["SLOW"];
+
+        if (b) {
+            if (b.length) {
+                for (var i = 0; i < b.length; i++) {
+                    if (b[i].value == "" || c[i].value == "" || d[i].value == "" || (e[i].value == "" && f[i].value == "")) {
+                        return false;
+                    }
+
+                }
+            } else {
+                if (b.value == "" || c.value == "" || d.value == "" || (e.value == "" && f.value == "")) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+</script>
